@@ -4,10 +4,17 @@ import org.testng.AssertJUnit;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.Test;
 import org.testng.annotations.BeforeClass;
+
+import static org.testng.Assert.assertEquals;
+
 import java.time.Duration;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
@@ -43,7 +50,7 @@ WebDriver driver;
 		 
 
 	  }
-	
+
 		@Test(priority = 1)
 		public void navigateToHomePage() {
 				homePage=new demoBlaze_HomePage(driver);		  
@@ -69,7 +76,7 @@ WebDriver driver;
 	      // Verify if the welcome text is displayed correctly
 	        String actualWelcomeText = logInPage.getWelcomeText(); // Assume getWelcomeText() retrieves the welcome text
 
-	        AssertJUnit.assertEquals(actualWelcomeText, expectedWelcomeText, "Validate User Logged In Successfully & Welcome text displayed to user:");
+	        assertEquals(actualWelcomeText, expectedWelcomeText, "Validate User Logged In Successfully & Welcome text displayed to user:");
 		
 	  }
 	  @Test(priority = 4)
@@ -78,10 +85,10 @@ WebDriver driver;
 		  prdPage=new demoBlaze_ProductDetailsPage(driver);		  
 		  homePage.selectProduct(prdName);
 		  String actualProductName = prdPage.getstrProductName();
-		  AssertJUnit.assertEquals(actualProductName,prdName,"Validate System displays the selected product details");
+		  assertEquals(actualProductName,prdName,"Validate System displays the selected product details");
 		  prd_Price=prdPage.getProductPrice();//get Product Price details.
 		  String str_AlertMsg=prdPage.addProductToCart(); 
-		  AssertJUnit.assertEquals("Product added.", str_AlertMsg,"Validate Product Added to Cart & Alert Message Displayed to User");
+		  assertEquals("Product added.", str_AlertMsg,"Validate Product Added to Cart & Alert Message Displayed to User");
 		   // Assuming this method retrieves the actual product name from the detail page
 	  }
 	  
@@ -91,7 +98,7 @@ WebDriver driver;
 		  cartPage=new demoBlaze_CartPage(driver);		  
 		  homePage.navigateToCartPage();
 		  String act_Prod_Name=cartPage.checkProductNameInCart();
-		    AssertJUnit.assertEquals(act_Prod_Name,prdName,"Verify Product Name is Matching successfully");
+		    assertEquals(act_Prod_Name,prdName,"Verify Product Name is Matching successfully");
 		    String act_Prod_Price=cartPage.checkProductPriceInCart();
 		    AssertJUnit.assertEquals("Verify Product price is Matching successfully", true,prd_Price.contains(act_Prod_Price));
 		  cartPage.clickPlaceOrder();
