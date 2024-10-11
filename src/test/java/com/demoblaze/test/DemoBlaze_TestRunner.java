@@ -1,5 +1,15 @@
 package com.demoblaze.test;
 
+import org.testng.AssertJUnit;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.Test;
+import org.testng.annotations.BeforeClass;
+import java.time.Duration;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
 import com.demoblaze.pages.demoBlaze_CartPage;
@@ -8,24 +18,11 @@ import com.demoblaze.pages.demoBlaze_LoginPage;
 import com.demoblaze.pages.demoBlaze_ProductDetailsPage;
 import com.demoblaze.pages.demoBlaze_SignUpPage;
 
-import dev.failsafe.internal.util.Assert;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
-import org.testng.annotations.BeforeMethod;
-import org.testng.annotations.AfterMethod;
-import org.testng.annotations.BeforeClass;
-
-import static org.testng.Assert.assertEquals;
-
-import java.time.Duration;
-
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.testng.annotations.AfterClass;
-
 public class DemoBlaze_TestRunner {
-	WebDriver driver;
+	
+WebDriver driver;
 	
 	demoBlaze_HomePage homePage;
 	demoBlaze_SignUpPage signUpPage; 
@@ -51,7 +48,7 @@ public class DemoBlaze_TestRunner {
 		public void navigateToHomePage() {
 				homePage=new demoBlaze_HomePage(driver);		  
 				String Actualpagetitle=homePage.getPageTitle();
-				assertEquals(Actualpagetitle, "STORE");
+				AssertJUnit.assertEquals(Actualpagetitle, "STORE");
 		}	
 	
 		/*
@@ -72,7 +69,7 @@ public class DemoBlaze_TestRunner {
 	      // Verify if the welcome text is displayed correctly
 	        String actualWelcomeText = logInPage.getWelcomeText(); // Assume getWelcomeText() retrieves the welcome text
 
-	        assertEquals(actualWelcomeText, expectedWelcomeText, "Validate User Logged In Successfully & Welcome text displayed to user:");
+	        AssertJUnit.assertEquals(actualWelcomeText, expectedWelcomeText, "Validate User Logged In Successfully & Welcome text displayed to user:");
 		
 	  }
 	  @Test(priority = 4)
@@ -81,10 +78,10 @@ public class DemoBlaze_TestRunner {
 		  prdPage=new demoBlaze_ProductDetailsPage(driver);		  
 		  homePage.selectProduct(prdName);
 		  String actualProductName = prdPage.getstrProductName();
-		  assertEquals(actualProductName,prdName,"Validate System displays the selected product details");
+		  AssertJUnit.assertEquals(actualProductName,prdName,"Validate System displays the selected product details");
 		  prd_Price=prdPage.getProductPrice();//get Product Price details.
 		  String str_AlertMsg=prdPage.addProductToCart(); 
-		  assertEquals("Product added.", str_AlertMsg,"Validate Product Added to Cart & Alert Message Displayed to User");
+		  AssertJUnit.assertEquals("Product added.", str_AlertMsg,"Validate Product Added to Cart & Alert Message Displayed to User");
 		   // Assuming this method retrieves the actual product name from the detail page
 	  }
 	  
@@ -94,9 +91,9 @@ public class DemoBlaze_TestRunner {
 		  cartPage=new demoBlaze_CartPage(driver);		  
 		  homePage.navigateToCartPage();
 		  String act_Prod_Name=cartPage.checkProductNameInCart();
-		    assertEquals(act_Prod_Name,prdName,"Verify Product Name is Matching successfully");
+		    AssertJUnit.assertEquals(act_Prod_Name,prdName,"Verify Product Name is Matching successfully");
 		    String act_Prod_Price=cartPage.checkProductPriceInCart();
-		    assertEquals(prd_Price.contains(act_Prod_Price), true,"Verify Product price is Matching successfully");
+		    AssertJUnit.assertEquals("Verify Product price is Matching successfully", true,prd_Price.contains(act_Prod_Price));
 		  cartPage.clickPlaceOrder();
 		  cartPage.fillPlaceOrderToSubmit();
 		 
@@ -108,5 +105,6 @@ public class DemoBlaze_TestRunner {
 
 	  driver.quit();
   }
+
 
 }
